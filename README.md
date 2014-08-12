@@ -1,6 +1,5 @@
-***************************************
-*               Naive-Bayes           *
-*               Version 2.0           *
+#Naive-Bayes
+##Version 2.0
 ***************************************
 
 (C) Brendan J. Herger
@@ -11,7 +10,7 @@ Available under MIT License
 http://opensource.org/licenses/MIT
 
 
-OVERALL
+##OVERALL
 **********************************
 
 Basically, when fed a list of documents and the categories these files belong to, this program will use a
@@ -46,7 +45,7 @@ This is designed to match the dataset included with this git, and available at
 http://www.cs.cornell.edu/people/Pabo/movie-review-data/ . Please note that the categories are determined with each run,
 and are not limited to the 'pos' and 'neg' categories in this example data set.
 
-CURRENT IMPLEMENTATION-Optimization
+##CURRENT IMPLEMENTATION-Optimization
 **********************************
 In order to maximize average correct identification, there are a few modifications on the general Naive-Bayes format.
 In particular, some words are re-weighted in bhUtilities.splitAndCleanString(), and known negative and positive words
@@ -57,9 +56,10 @@ I simply pickle a dictionary containing all words contained in every document. T
 databases (and you should probably look into mmap or just reading documents when they are needed).
 
 Finally, all categories recieve equal probability in this implementation. This can be changed by modifying:
+
     P_c = float(len(catList))**-1 #equal weighting
 
-THANK YOU's
+##THANK YOU's
 **********************************
 This base project was created as a project submission for the Summer 2014 section of MSAN 593, taught at the University
 of San Francisco by Yannet Interian. I would like to thank her and the faculty for their support and guidance.
