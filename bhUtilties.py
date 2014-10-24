@@ -129,6 +129,7 @@ def splitAndCleanString(stringIn):
     stringIn = re.sub('!', ' !!!! ', stringIn)
     stringIn = re.sub('\?', ' ???? ', stringIn)
     stringIn = re.sub('\*', ' **** ', stringIn)
+    #
     #splitting
     lineSplit = stringIn.split()
     triLineSplit = [""]* len(lineSplit)
