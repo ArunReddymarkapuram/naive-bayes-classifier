@@ -79,25 +79,25 @@ def main():
     :return:
     """
     # get data
-    train, test = generate_df("data/review_polarity/txt_sentoken")
+    train_df, test_df = generate_df("data/review_polarity/txt_sentoken")
+
+    # separate training data into data, train_labels
+    train_labels = pd.DataFrame(train_df["category"])
+    train_df = train_df["text"]
 
     # create model
     nb = NaiveBayes.NaiveBayes()
 
-    # separate training data into data, labels
-    labels = pd.DataFrame(train["category"])
-    train = train["text"]
-
     # train
-    nb.fit(train, labels)
+    nb.fit(train_df, train_labels)
 
     # predict
-    output = nb.predict(test)
+    output = nb.predict(test_df)
 
     # check accuracy
     df = pd.DataFrame()
     df['guess'] = output['guess']
-    df['actual'] = test['category']
+    df['actual'] = test_df['category']
 
     df['correct'] = df['guess'] == df['actual']
 
