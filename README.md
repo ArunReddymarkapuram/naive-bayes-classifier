@@ -1,5 +1,5 @@
 #Naive-Bayes
-##Version 2.0
+##Version 3.0
 ***************************************
 
 (C) Brendan J. Herger
@@ -10,7 +10,7 @@ Available under MIT License
 http://opensource.org/licenses/MIT
 
 
-##OVERALL
+##Intro
 **********************************
 
 Basically, when fed a list of documents and the categories these files belong to, this program will use a
@@ -19,7 +19,10 @@ unknown categories.
 
 This is a simple package for document classification using a Naive-Bayes scheme (fairly well documented, so I won't
 describe it here). The main package is fairly independent of I/O, but does require the training data, training labels, 
-and test data to be formatted as described in the NaiveBayes documenation. 
+and test data to be formatted as described in the NaiveBayes documentation. 
+
+##Usage
+**********************************
 
 An example script is provided in ExampleData.py, but the crux of this module are the following three lines:
 
@@ -33,8 +36,9 @@ An example script is provided in ExampleData.py, but the crux of this module are
     output = nb.predict(test_df)
 
 
-##THANK YOU's
+##Thank you notes
 **********************************
+
 This base project was created as a project submission for the Summer 2014 section of MSAN 593, taught at the University
 of San Francisco by Yannet Interian. I would like to thank her and the faculty for their support and guidance.
 
