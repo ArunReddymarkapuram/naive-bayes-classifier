@@ -1,26 +1,27 @@
-# ExampleData.py
-# A component of: hw6
-# (C) Brendan J. Herger
-# Analytics Master's Candidate at University of San Francisco
-# 13herger@gmail.com
-#
-# Created on 10/24/14, at 3:15 PM
-#
-# Available under MIT License
-# http://opensource.org/licenses/MIT
-#
-# *********************************
-#
+"""
+coding=utf-8
+ExampleData.py
+A component of: hw6
+(C) Brendan J. Herger
+Analytics Master's Candidate at University of San Francisco
+13herger@gmail.com
+
+Created on 10/24/14, at 3:15 PM
+
+Available under MIT License
+http://opensource.org/licenses/MIT
+"""
+
 # imports
 # *********************************
 import os
 import random
-import re
-import sys
 
 import numpy as np
 import pandas as pd
+
 import NaiveBayes
+
 
 # global variables
 # *********************************
@@ -37,50 +38,68 @@ __maintainer__ = 'bjherger'
 # *********************************
 
 
-def genCategoryList(directory):
-    return os.listdir(directory)
+def generate_df(directory):
+    """
+    Create train and test dataframes from the included data sets.
+    :param directory: directory for data.
+    :return: train_df, test_df
+    :rtype: tuple
+    """
 
-
-def generate_dataframe(directory):
-    categoryList = genCategoryList(directory)
+    # iterate through directory structure, create dataframe from documents
+    category_list = os.listdir(directory)
     file_list = list()
-    for category in categoryList:
-        categoryDirectory = os.path.join(directory, category)
-        for file in bhUtilties.traverseDirectory(categoryDirectory):
+    for category in category_list:
+        category_directory = os.path.join(directory, category)
+        for local_file in bhUtilties.traverseDirectory(category_directory):
             entry_dic = dict()
-            entry_dic["path"] = file
+            entry_dic["path"] = local_file
             entry_dic["category"] = category
-            with open(file) as fileOpen:
-                entry_dic["text"] =fileOpen.read()
+            with open(local_file) as fileOpen:
+                entry_dic["text"] = fileOpen.read()
             file_list.append(entry_dic)
+
+    # randomly assign train, test sets
     shuffled = random.sample(file_list, len(file_list))
     cutoff = int(len(shuffled) * .666)
-    trainList = shuffled[:cutoff]
-    testList = shuffled[cutoff:]
-    train_df = pd.DataFrame(trainList)
-    test_df = pd.DataFrame(testList)
+    train_list = shuffled[:cutoff]
+    test_list = shuffled[cutoff:]
+
+    # convert to DataFrames
+    train_df = pd.DataFrame(train_list)
+    test_df = pd.DataFrame(test_list)
+
+    # return
     return train_df, test_df
 
 
 def main():
+    """
+    main method
+    :return:
+    """
+    # get data
+    train, test = generate_df("data/review_polarity/txt_sentoken")
 
-    train, test = generate_dataframe("data/review_polarity/txt_sentoken")
+    # create model
     nb = NaiveBayes.NaiveBayes()
 
+    # separate training data into data, labels
     labels = pd.DataFrame(train["category"])
-    train.drop("category", 1)
+    train = train["text"]
 
-
+    # train
     nb.fit(train, labels)
 
+    # predict
     output = nb.predict(test)
 
+    # check accuracy
     df = pd.DataFrame()
     df['guess'] = output['guess']
     df['actual'] = test['category']
 
     df['correct'] = df['guess'] == df['actual']
-
 
     print df
     print np.mean(df['correct'])
@@ -92,4 +111,3 @@ if __name__ == '__main__':
     print 'Begin Main'
     main()
     print 'End Main'
-
