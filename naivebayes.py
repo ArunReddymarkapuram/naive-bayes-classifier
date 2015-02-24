@@ -113,6 +113,8 @@ def predict(test_data, trained_df):
     test_data = pd.DataFrame(test_data)
     trained_df = pd.DataFrame(trained_df)
 
+    test_data.columns = ['text']
+
     # variables
     total_non_unique_words = trained_df['num_unique_words'].sum()
 
@@ -218,4 +220,4 @@ class NaiveBayes(object):
         :return: predicted categorical values, based on previous fit. The observations will be in the same order as
         test_data
         """
-        return predict(test_data, self.trained)
+        return predict(test_data, self.trained)['guess']
